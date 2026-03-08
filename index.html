@@ -234,6 +234,34 @@ body{background:#08080C;color:#F0F0F5;font-family:-apple-system,BlinkMacSystemFo
 <div class="tab"><div class="ti" onclick="switchTab('home')"><span>🏠</span><span>Accueil</span></div><div class="ti" onclick="switchTab('verdicts')"><span>⚖️</span><span>Verdicts</span></div><div class="ti" onclick="switchTab('classement')"><span>🏆</span><span>Rang</span></div><div class="ti on" onclick="switchTab('profil')"><span>👤</span><span>Profil</span></div></div>
 </div>
 
+<!-- ROLE CHOICE -->
+<div class="P" id="role-pick">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center">
+<div style="font-size:48px;margin-bottom:16px">⚖️</div>
+<div style="font-size:24px;font-weight:900;margin-bottom:8px" id="rp-case">—</div>
+<div style="font-size:13px;color:#8888A0;margin-bottom:32px" id="rp-type">—</div>
+<div style="font-size:16px;font-weight:800;margin-bottom:20px">Comment participez-vous ?</div>
+<div style="display:flex;flex-direction:column;gap:12px;width:100%;max-width:300px">
+<div style="display:flex;gap:12px">
+<button style="flex:1;padding:20px 12px;background:#161622;border:2px solid #4ECB71;border-radius:16px;cursor:pointer;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px" onclick="pickRole('defense')">
+<div style="font-size:32px">🛡️</div>
+<div style="font-size:15px;font-weight:800;color:#4ECB71">Défense</div>
+<div style="font-size:11px;color:#8888A0">Protégez l'accusé</div>
+</button>
+<button style="flex:1;padding:20px 12px;background:#161622;border:2px solid #FF4757;border-radius:16px;cursor:pointer;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px" onclick="pickRole('accusation')">
+<div style="font-size:32px">⚔️</div>
+<div style="font-size:15px;font-weight:800;color:#FF4757">Accusation</div>
+<div style="font-size:11px;color:#8888A0">Attaquez l'accusé</div>
+</button>
+</div>
+<button style="padding:16px;background:#161622;border:2px solid #FFD23F;border-radius:16px;cursor:pointer;display:flex;align-items:center;gap:14px" onclick="pickRole('spectateur')">
+<div style="font-size:28px">👁️</div>
+<div style="text-align:left"><div style="font-size:14px;font-weight:700;color:#FFD23F">Spectateur</div><div style="font-size:11px;color:#8888A0">Regardez et commentez</div></div>
+</button>
+</div>
+</div>
+</div>
+
 <!-- PREP -->
 <div class="P" id="prep">
 <div style="padding:14px 16px;display:flex;align-items:center;justify-content:space-between"><button style="background:none;border:none;color:#FFA04E;font-size:14px;font-weight:600;cursor:pointer" onclick="go('home')">← Quitter</button><div style="font-size:14px;font-weight:700;color:#8888A0">Préparation</div><div></div></div>
@@ -600,15 +628,24 @@ h.innerHTML=html;
 
 function joinCase(id){
 var c=CASES[id];if(!c)return;
-document.getElementById('pr-name').textContent=c.n;
-document.getElementById('pr-type').textContent=c.t+(c.dur==='long'?' · 10 min':' · 5 min');
-document.getElementById('pr-dos').textContent=c.dos;
 curCase=id;
-startPrep(c.pt);
-go('prep');
+document.getElementById('rp-case').textContent=c.n;
+document.getElementById('rp-type').textContent=c.t+(c.dur==='long'?' · 10 min':' · 5 min');
+go('role-pick');
 }
 
 var curCase=null;var prepI=null;var debI=null;var comI=null;
+var myRole='defense';
+
+function pickRole(role){
+myRole=role;
+var c=CASES[curCase];
+document.getElementById('pr-name').textContent=c.n;
+document.getElementById('pr-type').textContent=c.t+(c.dur==='long'?' · 10 min':' · 5 min');
+document.getElementById('pr-dos').textContent=c.dos;
+startPrep(c.pt);
+go('prep');
+}
 function startPrep(secs){
 var left=secs;
 clearInterval(prepI);
@@ -622,11 +659,20 @@ var c=CASES[curCase];
 document.getElementById('a-name').textContent=c.n;
 document.getElementById('a-type').textContent=c.t;
 document.getElementById('a-viewers').textContent=c.v;
-document.getElementById('s-dn').textContent='Vous';
-document.getElementById('s-an').textContent=c.a;
-document.getElementById('s-def').textContent=(me.name||'VO').substring(0,2).toUpperCase();
-document.getElementById('s-acc').textContent=c.a.substring(0,2).toUpperCase();
+/* Set role labels based on user choice */
+if(myRole==='accusation'){
+document.getElementById('s-dn').textContent='DÉFENSE';
+document.getElementById('s-an').textContent=me.name||'Vous';
+document.getElementById('s-def').textContent='DF';
+document.getElementById('s-acc').textContent=(me.name||'VO').substring(0,2).toUpperCase();
 document.getElementById('s-ab').textContent=c.ar;
+}else{
+document.getElementById('s-dn').textContent=me.name||'Vous';
+document.getElementById('s-an').textContent=c.ar;
+document.getElementById('s-def').textContent=(me.name||'VO').substring(0,2).toUpperCase();
+document.getElementById('s-acc').textContent=c.ar.substring(0,2).toUpperCase();
+document.getElementById('s-ab').textContent=c.ar;
+}
 document.getElementById('coms').innerHTML='';
 go('audience');
 joinRoom(curCase);
@@ -647,8 +693,8 @@ el.scrollTop=el.scrollHeight;
 }
 function sendCom(){
 var inp=document.getElementById('ci');var t=inp.value.trim();if(!t)return;inp.value='';
-addC(me.name||'Maître',t,'#4ECB71');
-sendComToFirebase(me.name||'Maître',t,'#4ECB71');
+addC(me.name||'Maître',t,myRole==='accusation'?'#FF4757':'#4ECB71');
+sendComToFirebase(me.name||'Maître',t,myRole==='accusation'?'#FF4757':'#4ECB71');
 
 }
 
