@@ -346,7 +346,8 @@ document.getElementById('e5').style.display=p.length>=6?'none':'block';
 if(!e||p.length<6)return;
 me.name='Maître';
 document.getElementById('p-name').textContent='Maître';
-goChoose();
+buildHome();
+go('home');
 }
 
 var CLIENTS=[
@@ -490,6 +491,35 @@ s1.onerror=function(){};
 document.head.appendChild(s1);
 }
 initFirebase();
+
+/* Share peer IDs via Firebase for audio */
+function publishPeerId(roomId){
+if(!window.db||!myPeer)return;
+myPeer.on('open',function(id){
+var ref=window.db.ref('rooms/'+roomId+'/peers/'+myUid);
+ref.set({peerId:id,name:me.name||'Maître'});
+ref.onDisconnect().remove();
+});
+/* If already open */
+if(myPeer.id){
+var ref=window.db.ref('rooms/'+roomId+'/peers/'+myUid);
+ref.set({peerId:myPeer.id,name:me.name||'Maître'});
+ref.onDisconnect().remove();
+}
+/* Listen for other peers and call them */
+window.db.ref('rooms/'+roomId+'/peers').on('child_added',function(snap){
+var data=snap.val();
+if(snap.key===myUid)return;
+if(!myPeer)return;
+/* Call them with our stream or empty */
+setTimeout(function(){
+var call=myPeer.call(data.peerId,myStream||new MediaStream());
+call.on('stream',function(rs){playRemote(rs)});
+peers[data.peerId]=call;
+},1000);
+});
+}
+
 
 /* Join a room and listen for real comments */
 var roomListener=null;
@@ -676,6 +706,7 @@ document.getElementById('s-ab').textContent=c.ar;
 document.getElementById('coms').innerHTML='';
 go('audience');
 joinRoom(curCase);
+publishPeerId(curCase);
 addC('Le Président','L\'audience est ouverte. '+c.q+'.','#FFD23F');
 
 var left=c.dt;
@@ -700,7 +731,7 @@ sendComToFirebase(me.name||'Maître',t,myRole==='accusation'?'#FF4757':'#4ECB71'
 
 
 function startFakeComments(){}
-function leaveAud(){clearInterval(debI);clearInterval(comI);disconnectAudio();leaveRoom();go('home')}
+function leaveAud(){clearInterval(debI);clearInterval(comI);disconnectAudio();if(window.db&&currentRoom)window.db.ref('rooms/'+currentRoom+'/peers/'+myUid).remove();leaveRoom();go('home')}
 
 /* ===== AUDIO - PeerJS ===== */
 var myPeer=null;
@@ -824,6 +855,35 @@ s1.onerror=function(){};
 document.head.appendChild(s1);
 }
 initFirebase();
+
+/* Share peer IDs via Firebase for audio */
+function publishPeerId(roomId){
+if(!window.db||!myPeer)return;
+myPeer.on('open',function(id){
+var ref=window.db.ref('rooms/'+roomId+'/peers/'+myUid);
+ref.set({peerId:id,name:me.name||'Maître'});
+ref.onDisconnect().remove();
+});
+/* If already open */
+if(myPeer.id){
+var ref=window.db.ref('rooms/'+roomId+'/peers/'+myUid);
+ref.set({peerId:myPeer.id,name:me.name||'Maître'});
+ref.onDisconnect().remove();
+}
+/* Listen for other peers and call them */
+window.db.ref('rooms/'+roomId+'/peers').on('child_added',function(snap){
+var data=snap.val();
+if(snap.key===myUid)return;
+if(!myPeer)return;
+/* Call them with our stream or empty */
+setTimeout(function(){
+var call=myPeer.call(data.peerId,myStream||new MediaStream());
+call.on('stream',function(rs){playRemote(rs)});
+peers[data.peerId]=call;
+},1000);
+});
+}
+
 
 /* Join a room and listen for real comments */
 var currentRoom=null;
