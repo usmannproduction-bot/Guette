@@ -43,8 +43,12 @@ body{background:#08080C;color:#F0F0F5;font-family:-apple-system,BlinkMacSystemFo
 .b-def{background:rgba(78,203,113,.08);color:#4ECB71;border:1px solid rgba(78,203,113,.15)}
 .b-acc{background:rgba(255,71,87,.08);color:#FF4757;border:1px solid rgba(255,71,87,.15)}
 .b-pres{background:rgba(255,210,63,.08);color:#FFD23F;border:1px solid rgba(255,210,63,.2)}
-.com{display:flex;align-items:center;gap:8px;padding:6px 12px;background:#161622;border:1px solid rgba(255,255,255,.07);border-radius:99px;max-width:85%;animation:cs .4s}
+.com{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:rgba(22,22,34,.8);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.05);border-radius:16px;border-top-left-radius:4px;max-width:90%;animation:cs .3s}
 @keyframes cs{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+.rbtn{padding:6px 10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:99px;font-size:18px;cursor:pointer;flex-shrink:0;transition:transform .15s}
+.rbtn:active{transform:scale(1.3)}
+.float-react{position:absolute;font-size:28px;animation:floatUp 1.5s ease-out forwards;pointer-events:none;z-index:50}
+@keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(1)}50%{opacity:.8;transform:translateY(-60px) scale(1.2)}100%{opacity:0;transform:translateY(-120px) scale(0.8)}}
 .vd{background:#161622;border:1px solid rgba(255,255,255,.07);border-radius:20px;overflow:hidden;margin-bottom:20px}
 </style>
 </head>
@@ -74,10 +78,10 @@ body{background:#08080C;color:#F0F0F5;font-family:-apple-system,BlinkMacSystemFo
 <div style="font-size:30px;font-weight:900;color:#FF7A2E;margin-bottom:8px">Maître</div>
 <div style="color:#505068;margin-bottom:28px">Créez votre cabinet.</div>
 <div style="display:flex;flex-direction:column;gap:18px">
-<div><div style="font-size:12px;font-weight:700;color:#8888A0;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">Nom de l'avocat</div><input class="inp" id="su-n" placeholder="Maître Diallo"><div class="err" id="e1">Requis</div></div>
-<div><div style="font-size:12px;font-weight:700;color:#8888A0;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">Nom du cabinet</div><input class="inp" id="su-cab" placeholder="Cabinet Diallo & Associés"><div class="err" id="e6" style="display:none">Requis</div></div>
-<div><div style="font-size:12px;font-weight:700;color:#8888A0;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">E-mail</div><input class="inp" id="su-e" type="email" placeholder="email@exemple.com"><div class="err" id="e2">Requis</div></div>
-<div><div style="font-size:12px;font-weight:700;color:#8888A0;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">Mot de passe</div><input class="inp" id="su-p" type="password" placeholder="Min. 6 caractères"><div class="err" id="e3">Min. 6 caractères</div></div>
+<div><div style="font-size:12px;font-weight:700;color:#8888A0;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">Nom de l'avocat</div><input class="inp" id="su-n" placeholder="Votre nom"><div class="err" id="e1">Requis</div></div>
+<div><div style="font-size:12px;font-weight:700;color:#8888A0;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">Nom du cabinet</div><input class="inp" id="su-cab" placeholder="Nom du cabinet (optionnel)"><div class="err" id="e6" style="display:none">Requis</div></div>
+<div><div style="font-size:12px;font-weight:700;color:#8888A0;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">E-mail</div><input class="inp" id="su-e" type="email" placeholder="Adresse e-mail"><div class="err" id="e2">Requis</div></div>
+<div><div style="font-size:12px;font-weight:700;color:#8888A0;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">Mot de passe</div><input class="inp" id="su-p" type="password" placeholder="6 caractères minimum"><div class="err" id="e3">Min. 6 caractères</div></div>
 </div>
 <button class="btn bo" style="margin-top:24px" onclick="doSignup()">Créer mon compte</button>
 </div>
@@ -92,7 +96,7 @@ body{background:#08080C;color:#F0F0F5;font-family:-apple-system,BlinkMacSystemFo
 <div style="font-size:30px;font-weight:900;color:#FF7A2E;margin-bottom:8px">Maître</div>
 <div style="color:#505068;margin-bottom:28px">Reprenez votre place.</div>
 <div style="display:flex;flex-direction:column;gap:18px">
-<div><div style="font-size:12px;font-weight:700;color:#8888A0;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">E-mail</div><input class="inp" id="li-e" type="email" placeholder="email@exemple.com"><div class="err" id="e4">Requis</div></div>
+<div><div style="font-size:12px;font-weight:700;color:#8888A0;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">E-mail</div><input class="inp" id="li-e" type="email" placeholder="Adresse e-mail"><div class="err" id="e4">Requis</div></div>
 <div><div style="font-size:12px;font-weight:700;color:#8888A0;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">Mot de passe</div><input class="inp" id="li-p" type="password" placeholder="Mot de passe"><div class="err" id="e5">Min. 6 caractères</div></div>
 </div>
 <button class="btn bo" style="margin-top:24px" onclick="doLogin()">Se connecter</button>
@@ -101,15 +105,15 @@ body{background:#08080C;color:#F0F0F5;font-family:-apple-system,BlinkMacSystemFo
 
 <!-- ONB 1 -->
 <div class="P" id="onb1">
-<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center">
-<div style="font-size:36px;font-weight:900;color:#FF7A2E;margin-bottom:20px;letter-spacing:-2px">01</div>
-<div style="font-size:26px;font-weight:900;margin-bottom:12px"><span style="color:#FF7A2E">Étape 1</span> — Le feed</div>
-<div style="color:#8888A0;font-size:15px;line-height:1.6;max-width:300px;margin-bottom:28px">Scrollez les affaires en direct. Chaque carte = un débat en cours. Choisissez celui qui vous parle.</div>
-<div style="background:#161622;border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:16px;width:100%;max-width:280px">
-<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:12px;font-weight:700;color:#FF4757">● EN DIRECT</div><div style="font-size:12px;color:#505068">1.8k</div></div>
-<div style="font-size:16px;font-weight:800;margin-bottom:4px">Dushane vs Sully</div>
-<div style="font-size:12px;color:#505068;margin-bottom:10px">Top Boy — Qui mérite le trône ?</div>
-<div style="padding:8px;background:linear-gradient(135deg,#FF7A2E,#FFA04E);border-radius:10px;text-align:center;font-size:13px;font-weight:700;color:#fff">Rejoindre</div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;background:radial-gradient(ellipse at 50% 30%,rgba(255,122,46,.06) 0%,transparent 60%)">
+<div style="font-size:42px;margin-bottom:16px">📺</div>
+<div style="font-size:28px;font-weight:900;line-height:1.2;margin-bottom:12px;max-width:280px">Vos séries préférées passent au <span style="color:#FF7A2E">tribunal</span></div>
+<div style="color:#8888A0;font-size:14px;line-height:1.6;max-width:280px;margin-bottom:28px">Ghost, Annalise, Light Yagami, Dushane... Ils sont tous accusés. Choisissez une affaire en direct.</div>
+<div style="background:#161622;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:16px;width:100%;max-width:280px">
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><div style="font-size:11px;font-weight:700;color:#FF4757">● EN DIRECT</div></div>
+<div style="font-size:15px;font-weight:800;margin-bottom:4px">Dushane vs Sully</div>
+<div style="font-size:11px;color:#505068;margin-bottom:10px">Top Boy — Trahison à Summerhouse</div>
+<div style="padding:8px;background:linear-gradient(135deg,#FF7A2E,#FFA04E);border-radius:10px;text-align:center;font-size:12px;font-weight:700;color:#fff">Rejoindre l'audience</div>
 </div>
 </div>
 <div style="padding:0 24px 32px"><button class="btn bp" onclick="go('onb2')">Suivant</button></div>
@@ -117,14 +121,14 @@ body{background:#08080C;color:#F0F0F5;font-family:-apple-system,BlinkMacSystemFo
 
 <!-- ONB 2 -->
 <div class="P" id="onb2">
-<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center">
-<div style="font-size:36px;font-weight:900;color:#FF7A2E;margin-bottom:20px;letter-spacing:-2px">02</div>
-<div style="font-size:26px;font-weight:900;margin-bottom:12px"><span style="color:#FF7A2E">Étape 2</span> — Votre rôle</div>
-<div style="color:#8888A0;font-size:15px;line-height:1.6;max-width:300px;margin-bottom:28px">Défense, Accusation ou simple <strong style="color:#F0F0F5">Spectateur</strong>. Vous choisissez comment participer.</div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;background:radial-gradient(ellipse at 50% 30%,rgba(124,92,252,.06) 0%,transparent 60%)">
+<div style="font-size:42px;margin-bottom:16px">🎭</div>
+<div style="font-size:28px;font-weight:900;line-height:1.2;margin-bottom:12px;max-width:280px">Choisissez votre <span style="color:#7C5CFC">rôle</span></div>
+<div style="color:#8888A0;font-size:14px;line-height:1.6;max-width:280px;margin-bottom:28px">Juge, avocat de la défense, accusation ou spectateur. À vous de décider comment vous entrez dans l'histoire.</div>
 <div style="display:flex;gap:10px;width:100%;max-width:300px">
-<div style="flex:1;padding:16px 8px;background:#161622;border:2px solid #FF7A2E;border-radius:14px;text-align:center"><div style="font-size:28px;margin-bottom:4px">⚖️</div><div style="font-size:13px;font-weight:700;color:#FF7A2E">Défense</div></div>
-<div style="flex:1;padding:16px 8px;background:#161622;border:2px solid #FF6B9D;border-radius:14px;text-align:center"><div style="font-size:28px;margin-bottom:4px">🔱</div><div style="font-size:13px;font-weight:700;color:#FF6B9D">Accusation</div></div>
-<div style="flex:1;padding:16px 8px;background:#161622;border:2px solid #FFD23F;border-radius:14px;text-align:center"><div style="font-size:28px;margin-bottom:4px">👁</div><div style="font-size:13px;font-weight:700;color:#FFD23F">Spectateur</div></div>
+<div style="flex:1;padding:16px 8px;background:#161622;border:1.5px solid #4ECB71;border-radius:14px;text-align:center"><div style="font-size:24px;font-weight:900;color:#4ECB71;margin-bottom:4px">DF</div><div style="font-size:12px;font-weight:700;color:#4ECB71">Défense</div></div>
+<div style="flex:1;padding:16px 8px;background:#161622;border:1.5px solid #FF4757;border-radius:14px;text-align:center"><div style="font-size:24px;font-weight:900;color:#FF4757;margin-bottom:4px">AC</div><div style="font-size:12px;font-weight:700;color:#FF4757">Accusation</div></div>
+<div style="flex:1;padding:16px 8px;background:#161622;border:1.5px solid #FFD23F;border-radius:14px;text-align:center"><div style="font-size:24px;font-weight:900;color:#FFD23F;margin-bottom:4px">JG</div><div style="font-size:12px;font-weight:700;color:#FFD23F">Juge</div></div>
 </div>
 </div>
 <div style="padding:0 24px 32px"><button class="btn bp" onclick="go('onb3')">Suivant</button></div>
@@ -146,17 +150,14 @@ body{background:#08080C;color:#F0F0F5;font-family:-apple-system,BlinkMacSystemFo
 
 <!-- ONB 4 -->
 <div class="P" id="onb4">
-<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center">
-<div style="font-size:36px;font-weight:900;color:#FF7A2E;margin-bottom:20px;letter-spacing:-2px">04</div>
-<div style="font-size:26px;font-weight:900;margin-bottom:12px"><span style="color:#FF7A2E">Étape 4</span> — Le débat</div>
-<div style="color:#8888A0;font-size:15px;line-height:1.6;max-width:300px;margin-bottom:28px">Plaidez en direct. Le Président arbitre. L'adversaire répond. Le public commente en temps réel.</div>
-<div style="background:#161622;border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:16px;width:100%;max-width:280px">
-<div style="display:flex;justify-content:center;gap:14px;margin-bottom:12px">
-<div style="text-align:center"><div style="width:44px;height:44px;border-radius:50%;background:#FFD23F;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;margin:0 auto 4px">PR</div><div style="font-size:10px;color:#FFD23F">Président</div></div>
-<div style="text-align:center"><div style="width:44px;height:44px;border-radius:50%;background:#4ECB71;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;margin:0 auto 4px">VO</div><div style="font-size:10px;color:#4ECB71">Vous</div></div>
-<div style="text-align:center"><div style="width:44px;height:44px;border-radius:50%;background:#FF4757;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;margin:0 auto 4px">AD</div><div style="font-size:10px;color:#FF4757">Adversaire</div></div>
-</div>
-<div style="font-size:12px;color:#8888A0;line-height:1.5"><span style="color:#4ECB71;font-weight:700">Vous :</span> Les faits parlent d'eux-mêmes…<br><span style="color:#FF4757;font-weight:700">Adversaire :</span> Je conteste cette version !</div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;background:radial-gradient(ellipse at 50% 30%,rgba(255,71,87,.06) 0%,transparent 60%)">
+<div style="font-size:42px;margin-bottom:16px">🎙</div>
+<div style="font-size:28px;font-weight:900;line-height:1.2;margin-bottom:12px;max-width:280px">Plaidez en <span style="color:#FF4757">direct</span></div>
+<div style="color:#8888A0;font-size:14px;line-height:1.6;max-width:280px;margin-bottom:28px">3 tours d'une minute. Vous plaidez, l'adversaire répond, le juge tranche. Le public réagit en live.</div>
+<div style="width:100%;max-width:280px;display:flex;flex-direction:column;gap:8px">
+<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(78,203,113,.06);border:1px solid rgba(78,203,113,.12);border-radius:12px"><div style="width:32px;height:32px;border-radius:50%;background:#4ECB71;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff">DF</div><div style="font-size:13px;color:#fff;flex:1">Les faits parlent d'eux-mêmes.</div><div style="font-size:9px;color:#505068">14:32</div></div>
+<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;background:rgba(255,71,87,.06);border:1px solid rgba(255,71,87,.12);border-radius:12px"><div style="width:32px;height:32px;border-radius:50%;background:#FF4757;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff">AC</div><div style="font-size:13px;color:#fff;flex:1">Je conteste cette version !</div><div style="font-size:9px;color:#505068">14:33</div></div>
+<div style="display:flex;gap:6px;justify-content:center;margin-top:4px"><div style="padding:4px 8px;background:rgba(255,255,255,.04);border-radius:99px;font-size:14px">😂</div><div style="padding:4px 8px;background:rgba(255,255,255,.04);border-radius:99px;font-size:14px">🔥</div><div style="padding:4px 8px;background:rgba(255,255,255,.04);border-radius:99px;font-size:14px">😤</div><div style="padding:4px 8px;background:rgba(255,255,255,.04);border-radius:99px;font-size:14px">👏</div></div>
 </div>
 </div>
 <div style="padding:0 24px 32px"><button class="btn bp" onclick="go('onb5')">Suivant</button></div>
@@ -164,17 +165,22 @@ body{background:#08080C;color:#F0F0F5;font-family:-apple-system,BlinkMacSystemFo
 
 <!-- ONB 5 -->
 <div class="P" id="onb5">
-<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center">
-<div style="font-size:36px;font-weight:900;color:#FF7A2E;margin-bottom:20px;letter-spacing:-2px">05</div>
-<div style="font-size:26px;font-weight:900;margin-bottom:12px"><span style="color:#FF7A2E">Étape 5</span> — Le verdict</div>
-<div style="color:#8888A0;font-size:15px;line-height:1.6;max-width:300px;margin-bottom:28px">Le public vote. Le verdict tombe. Gagnez des points, montez au classement et devenez le meilleur avocat de <strong style="color:#F0F0F5">Guette</strong>.</div>
-<div style="display:flex;gap:10px;width:100%;max-width:280px;margin-bottom:12px">
-<div style="flex:1;background:rgba(5,230,160,.08);border:2px solid #05E6A0;border-radius:14px;padding:16px 8px;text-align:center"><div style="font-size:28px;margin-bottom:4px">🕊️</div><div style="font-size:14px;font-weight:800;color:#05E6A0">62%</div><div style="font-size:10px;color:#505068">Acquitté</div></div>
-<div style="flex:1;background:rgba(255,71,87,.08);border:2px solid transparent;border-radius:14px;padding:16px 8px;text-align:center"><div style="font-size:28px;margin-bottom:4px">⚖️</div><div style="font-size:14px;font-weight:800;color:#FF4757">38%</div><div style="font-size:10px;color:#505068">Coupable</div></div>
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;text-align:center;background:radial-gradient(ellipse at 50% 30%,rgba(78,203,113,.06) 0%,transparent 60%)">
+<div style="font-size:42px;margin-bottom:16px">⚖</div>
+<div style="font-size:28px;font-weight:900;line-height:1.2;margin-bottom:12px;max-width:280px">Le <span style="color:#4ECB71">verdict</span> tombe</div>
+<div style="color:#8888A0;font-size:14px;line-height:1.6;max-width:280px;margin-bottom:28px">Le juge tranche. Gagnez des points, montez au classement. Devenez le meilleur avocat de Guette.</div>
+<div style="width:100%;max-width:280px">
+<div style="background:#161622;border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:18px;margin-bottom:12px">
+<div style="font-size:11px;font-weight:800;color:#FFD23F;letter-spacing:1px;margin-bottom:10px">VERDICT</div>
+<div style="font-size:22px;font-weight:900;color:#4ECB71;margin-bottom:4px">ACQUITTÉ</div>
+<div style="font-size:12px;color:#8888A0;margin-bottom:14px">Ghost est déclaré non coupable</div>
+<div style="display:flex;gap:6px;margin-bottom:4px"><div style="flex:62;height:6px;background:#4ECB71;border-radius:99px"></div><div style="flex:38;height:6px;background:#FF4757;border-radius:99px"></div></div>
+<div style="display:flex;justify-content:space-between"><div style="font-size:10px;color:#4ECB71;font-weight:700">62%</div><div style="font-size:10px;color:#FF4757;font-weight:700">38%</div></div>
 </div>
-<div style="background:rgba(5,230,160,.08);border:1px solid rgba(5,230,160,.2);border-radius:10px;padding:10px 16px;width:100%;max-width:280px;text-align:center"><div style="font-size:18px;font-weight:900;color:#05E6A0">+4 pts · Victoire 🎉</div></div>
+<div style="background:rgba(78,203,113,.08);border:1px solid rgba(78,203,113,.15);border-radius:12px;padding:12px;text-align:center"><div style="font-size:16px;font-weight:900;color:#4ECB71">+4 pts · Victoire</div></div>
 </div>
-<div style="padding:0 24px 32px"><button class="btn bp" onclick="goChoose()">C'est parti 🔥</button></div>
+</div>
+<div style="padding:0 24px 32px"><button class="btn bp" onclick="goChoose()">Commencer</button></div>
 </div>
 
 <!-- CHOOSE CLIENT -->
@@ -192,33 +198,10 @@ body{background:#08080C;color:#F0F0F5;font-family:-apple-system,BlinkMacSystemFo
 <div class="hd"><div class="logo">Guette</div><div class="av" onclick="go('profil')">👨🏿‍⚖️</div></div><div class="hl"></div>
 <div style="flex:1;padding:16px;overflow-y:auto" id="home-content"></div>
 <div style="position:absolute;bottom:86px;right:20px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#FF7A2E,#FFD23F);display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;cursor:pointer;box-shadow:0 6px 24px rgba(255,122,46,.35)" onclick="go('duel')"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-<div class="tab"><div class="ti on" onclick="switchTab('home')"><span>Accueil</span></div><div class="ti" onclick="switchTab('avenir')"><span>À venir</span></div><div class="ti" onclick="switchTab('verdicts')"><span>Verdicts</span></div><div class="ti" onclick="switchTab('classement')"><span>Rang</span></div><div class="ti" onclick="switchTab('profil')"><span>Profil</span></div></div>
+<div class="tab"><div class="ti on" onclick="switchTab('home')"><span>Accueil</span></div><div class="ti" onclick="switchTab('verdicts')"><span>Verdicts</span></div><div class="ti" onclick="switchTab('classement')"><span>Rang</span></div><div class="ti" onclick="switchTab('profil')"><span>Profil</span></div></div>
 </div>
 
 <!-- VERDICTS -->
-<!-- À VENIR -->
-<div class="P" id="avenir">
-<div class="hd"><div class="logo">Guette</div><div class="av" onclick="switchTab('profil')">👨🏿‍⚖️</div></div><div class="hl"></div>
-<div style="flex:1;padding:16px;overflow-y:auto">
-<div style="font-size:22px;font-weight:900;margin-bottom:4px">Audiences à venir</div>
-<div style="font-size:13px;color:#505068;margin-bottom:20px">Réservez votre rôle à l'avance</div>
-
-<!-- AUJOURD'HUI -->
-<div style="font-size:11px;font-weight:800;color:#FF7A2E;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px">Aujourd'hui</div>
-<div id="av-today" style="display:flex;flex-direction:column;gap:8px;margin-bottom:24px"></div>
-
-<!-- DEMAIN -->
-<div style="font-size:11px;font-weight:800;color:#FFA04E;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px">Demain</div>
-<div id="av-tomorrow" style="display:flex;flex-direction:column;gap:8px;margin-bottom:24px"></div>
-
-<!-- CETTE SEMAINE -->
-<div style="font-size:11px;font-weight:800;color:#8888A0;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px">Cette semaine</div>
-<div id="av-week" style="display:flex;flex-direction:column;gap:8px;margin-bottom:24px"></div>
-
-</div>
-<div class="tab"><div class="ti" onclick="switchTab('home')"><span>Accueil</span></div><div class="ti on" onclick="switchTab('avenir')"><span>À venir</span></div><div class="ti" onclick="switchTab('verdicts')"><span>Verdicts</span></div><div class="ti" onclick="switchTab('classement')"><span>Rang</span></div><div class="ti" onclick="switchTab('profil')"><span>Profil</span></div></div>
-</div>
-
 <div class="P" id="verdicts">
 <div class="hd"><div class="logo">Guette</div><div class="av">👨🏿‍⚖️</div></div><div class="hl"></div>
 <div style="flex:1;overflow-y:auto;scroll-snap-type:y mandatory" id="vd-scroll">
@@ -228,7 +211,7 @@ body{background:#08080C;color:#F0F0F5;font-family:-apple-system,BlinkMacSystemFo
 <div style="font-size:13px;color:#505068;max-width:260px;line-height:1.5">Les verdicts des audiences apparaîtront ici au fur et à mesure des procès.</div>
 </div>
 </div>
-<div class="tab"><div class="ti" onclick="switchTab('home')"><span>Accueil</span></div><div class="ti" onclick="switchTab('avenir')"><span>À venir</span></div><div class="ti on" onclick="switchTab('verdicts')"><span>Verdicts</span></div><div class="ti" onclick="switchTab('classement')"><span>Rang</span></div><div class="ti" onclick="switchTab('profil')"><span>Profil</span></div></div>
+<div class="tab"><div class="ti" onclick="switchTab('home')"><span>Accueil</span></div><div class="ti on" onclick="switchTab('verdicts')"><span>Verdicts</span></div><div class="ti" onclick="switchTab('classement')"><span>Rang</span></div><div class="ti" onclick="switchTab('profil')"><span>Profil</span></div></div>
 </div>
 
 <!-- CLASSEMENT -->
@@ -238,7 +221,7 @@ body{background:#08080C;color:#F0F0F5;font-family:-apple-system,BlinkMacSystemFo
 <div style="font-size:22px;font-weight:900;margin-bottom:16px">Classement</div>
 <div id="rank-list"><div style="display:flex;align-items:center;gap:12px;padding:14px;background:#161622;border:1px solid rgba(255,255,255,.07);border-radius:14px;margin-bottom:8px"><div style="width:28px;height:28px;border-radius:50%;background:#FFD23F;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#0C0C12">1</div><div style="flex:1"><div style="font-size:14px;font-weight:700">Maître Keita</div><div style="font-size:11px;color:#505068">324 pts</div></div><div style="font-size:13px;font-weight:700;color:#FF7A2E">92%</div></div><div style="display:flex;align-items:center;gap:12px;padding:14px;background:#161622;border:1px solid rgba(255,255,255,.07);border-radius:14px;margin-bottom:8px"><div style="width:28px;height:28px;border-radius:50%;background:#C0C0C0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#0C0C12">2</div><div style="flex:1"><div style="font-size:14px;font-weight:700">Maître Okonkwo</div><div style="font-size:11px;color:#505068">298 pts</div></div><div style="font-size:13px;font-weight:700;color:#FF7A2E">88%</div></div><div style="display:flex;align-items:center;gap:12px;padding:14px;background:#161622;border:1px solid rgba(255,255,255,.07);border-radius:14px;margin-bottom:8px"><div style="width:28px;height:28px;border-radius:50%;background:#CD7F32;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#0C0C12">3</div><div style="flex:1"><div style="font-size:14px;font-weight:700">Maître Diarra</div><div style="font-size:11px;color:#505068">276 pts</div></div><div style="font-size:13px;font-weight:700;color:#FF7A2E">85%</div></div><div style="display:flex;align-items:center;gap:12px;padding:14px;background:#161622;border:1px solid rgba(255,255,255,.07);border-radius:14px;margin-bottom:8px"><div style="width:28px;height:28px;border-radius:50%;background:#8888A0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#0C0C12">4</div><div style="flex:1"><div style="font-size:14px;font-weight:700">Maître Sow</div><div style="font-size:11px;color:#505068">251 pts</div></div><div style="font-size:13px;font-weight:700;color:#FF7A2E">83%</div></div><div style="display:flex;align-items:center;gap:12px;padding:14px;background:#161622;border:1px solid rgba(255,255,255,.07);border-radius:14px;margin-bottom:8px"><div style="width:28px;height:28px;border-radius:50%;background:#8888A0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#0C0C12">5</div><div style="flex:1"><div style="font-size:14px;font-weight:700">Maître Traoré</div><div style="font-size:11px;color:#505068">243 pts</div></div><div style="font-size:13px;font-weight:700;color:#FF7A2E">81%</div></div><div style="display:flex;align-items:center;gap:12px;padding:14px;background:#161622;border:1px solid rgba(255,255,255,.07);border-radius:14px;margin-bottom:8px"><div style="width:28px;height:28px;border-radius:50%;background:#8888A0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#0C0C12">6</div><div style="flex:1"><div style="font-size:14px;font-weight:700">Maître Faye</div><div style="font-size:11px;color:#505068">228 pts</div></div><div style="font-size:13px;font-weight:700;color:#FF7A2E">79%</div></div><div style="display:flex;align-items:center;gap:12px;padding:14px;background:#161622;border:1px solid rgba(255,255,255,.07);border-radius:14px;margin-bottom:8px"><div style="width:28px;height:28px;border-radius:50%;background:#8888A0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#0C0C12">7</div><div style="flex:1"><div style="font-size:14px;font-weight:700">Maître Konaté</div><div style="font-size:11px;color:#505068">215 pts</div></div><div style="font-size:13px;font-weight:700;color:#FF7A2E">77%</div></div><div style="display:flex;align-items:center;gap:12px;padding:14px;background:#161622;border:1px solid rgba(255,255,255,.07);border-radius:14px;margin-bottom:8px"><div style="width:28px;height:28px;border-radius:50%;background:#8888A0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:#0C0C12">8</div><div style="flex:1"><div style="font-size:14px;font-weight:700">Maître Mensah</div><div style="font-size:11px;color:#505068">198 pts</div></div><div style="font-size:13px;font-weight:700;color:#FF7A2E">75%</div></div></div>
 </div>
-<div class="tab"><div class="ti" onclick="switchTab('home')"><span>Accueil</span></div><div class="ti" onclick="switchTab('avenir')"><span>À venir</span></div><div class="ti" onclick="switchTab('verdicts')"><span>Verdicts</span></div><div class="ti on" onclick="switchTab('classement')"><span>Rang</span></div><div class="ti" onclick="switchTab('profil')"><span>Profil</span></div></div>
+<div class="tab"><div class="ti" onclick="switchTab('home')"><span>Accueil</span></div><div class="ti" onclick="switchTab('verdicts')"><span>Verdicts</span></div><div class="ti on" onclick="switchTab('classement')"><span>Rang</span></div><div class="ti" onclick="switchTab('profil')"><span>Profil</span></div></div>
 </div>
 
 <!-- PROFIL -->
@@ -253,8 +236,8 @@ body{background:#08080C;color:#F0F0F5;font-family:-apple-system,BlinkMacSystemFo
 </div>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:16px 20px">
 <div style="background:#161622;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:14px 8px;text-align:center"><div style="font-size:22px;font-weight:900;color:#FF7A2E" id="p-w">0</div><div style="font-size:11px;color:#505068;margin-top:2px">Victoires</div></div>
-<div style="background:#161622;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:14px 8px;text-align:center"><div style="font-size:22px;font-weight:900;color:#FF7A2E">89%</div><div style="font-size:11px;color:#505068;margin-top:2px">Taux</div></div>
-<div style="background:#161622;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:14px 8px;text-align:center"><div style="font-size:22px;font-weight:900;color:#FF7A2E">1</div><div style="font-size:11px;color:#505068;margin-top:2px">Clients</div></div>
+<div style="background:#161622;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:14px 8px;text-align:center"><div style="font-size:22px;font-weight:900;color:#FF7A2E" id="p-rate">0%</div><div style="font-size:11px;color:#505068;margin-top:2px">Taux</div></div>
+<div style="background:#161622;border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:14px 8px;text-align:center"><div style="font-size:22px;font-weight:900;color:#FF7A2E" id="p-pts">0</div><div style="font-size:11px;color:#505068;margin-top:2px">Points</div></div>
 </div>
 <div style="padding:0 20px 16px"><div style="font-size:16px;font-weight:800;margin-bottom:12px">Mon Client</div><div id="my-clients"></div></div>
 <div style="padding:0 20px 16px"><div style="font-size:16px;font-weight:800;margin-bottom:12px">Affaires traitées</div>
@@ -266,7 +249,7 @@ body{background:#08080C;color:#F0F0F5;font-family:-apple-system,BlinkMacSystemFo
 <div style="padding:8px 14px;background:#161622;border:1px solid rgba(255,255,255,.07);border-radius:10px;font-size:11px;font-weight:700;color:#505068;opacity:.5">Peaky · Shelby</div>
 </div></div>
 </div>
-<div class="tab"><div class="ti" onclick="switchTab('home')"><span>Accueil</span></div><div class="ti" onclick="switchTab('avenir')"><span>À venir</span></div><div class="ti" onclick="switchTab('verdicts')"><span>Verdicts</span></div><div class="ti" onclick="switchTab('classement')"><span>Rang</span></div><div class="ti on" onclick="switchTab('profil')"><span>Profil</span></div></div>
+<div class="tab"><div class="ti" onclick="switchTab('home')"><span>Accueil</span></div><div class="ti" onclick="switchTab('verdicts')"><span>Verdicts</span></div><div class="ti" onclick="switchTab('classement')"><span>Rang</span></div><div class="ti on" onclick="switchTab('profil')"><span>Profil</span></div></div>
 </div>
 
 <!-- ROLE CHOICE -->
@@ -330,7 +313,7 @@ body{background:#08080C;color:#F0F0F5;font-family:-apple-system,BlinkMacSystemFo
 </div>
 
 <!-- AUDIENCE -->
-<div class="P" id="audience">
+<div class="P" id="audience" style="position:relative;background:linear-gradient(180deg,#0C0C12 0%,#0F0F1A 30%,#110E1C 60%,#0C0C12 100%)">
 <!-- TOP BAR -->
 <div style="padding:8px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.06)">
 <button style="background:none;border:none;color:#FFA04E;font-size:13px;font-weight:600;cursor:pointer" onclick="leaveAud()">Quitter</button>
@@ -356,7 +339,7 @@ body{background:#08080C;color:#F0F0F5;font-family:-apple-system,BlinkMacSystemFo
 <div style="display:flex;justify-content:center;margin-bottom:14px">
 <div style="text-align:center;padding:10px 24px;background:#161622;border:1.5px solid rgba(255,210,63,.2);border-radius:14px">
 <div style="width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#3D3520,#2A2418);border:2.5px solid #FFD23F;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#FFD23F;margin:0 auto 6px">PR</div>
-<div style="font-size:11px;font-weight:700;color:#FFD23F">PRÉSIDENT</div>
+<div style="font-size:11px;font-weight:700;color:#FFD23F" id="pres-label">PRÉSIDENT</div>
 <div style="font-size:10px;color:#505068;margin-top:2px" id="pres-name">En attente</div>
 </div>
 </div>
@@ -385,12 +368,65 @@ body{background:#08080C;color:#F0F0F5;font-family:-apple-system,BlinkMacSystemFo
 </div>
 
 <!-- MESSAGES ZONE -->
-<div style="flex:1;padding:8px 14px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;justify-content:flex-end" id="coms"></div>
+<!-- ARGUMENT ZONE (defense & accusation only) -->
+<div id="arg-zone" style="display:none;flex:1;flex-direction:column;padding:14px;overflow-y:auto;position:relative">
+<!-- Background pattern like WhatsApp -->
+<div style="position:absolute;inset:0;opacity:.03;pointer-events:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><text x=%2210%22 y=%2220%22 font-size=%2212%22>⚖</text><text x=%2240%22 y=%2245%22 font-size=%2210%22>§</text><text x=%2215%22 y=%2250%22 font-size=%228%22>⚖</text></svg>');background-repeat:repeat"></div>
+<div style="font-size:11px;font-weight:700;color:#505068;text-align:center;margin-bottom:12px;position:relative">Vos arguments</div>
+<div id="my-args" style="flex:1;display:flex;flex-direction:column;gap:8px;overflow-y:auto;justify-content:flex-end;position:relative"></div>
+</div>
 
+<!-- COMMENTS (judge & spectators) -->
+<div style="flex:1;padding:8px 14px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;justify-content:flex-end;position:relative" id="coms">
+<!-- Background pattern -->
+<div style="position:absolute;inset:0;opacity:.02;pointer-events:none;background-image:url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2280%22><text x=%2210%22 y=%2225%22 font-size=%2214%22 fill=%22white%22>⚖</text><text x=%2250%22 y=%2255%22 font-size=%2210%22 fill=%22white%22>§</text><text x=%2225%22 y=%2270%22 font-size=%228%22 fill=%22white%22>⚖</text></svg>');background-repeat:repeat"></div>
+</div>
+
+<!-- VERDICT PANEL (judge only) -->
+<div id="verdict-panel" style="display:none;flex-direction:column;gap:12px;padding:16px;border-top:2px solid rgba(255,210,63,.2);background:rgba(255,210,63,.03)">
+<div style="font-size:14px;font-weight:800;color:#FFD23F;text-align:center">Rendez votre verdict</div>
+<div style="display:flex;gap:10px">
+<label style="flex:1;padding:14px;background:rgba(78,203,113,.06);border:2px solid rgba(78,203,113,.2);border-radius:12px;text-align:center;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px">
+<input type="radio" name="vdecision" value="acquitte" style="display:none" onclick="this.closest('label').style.borderColor='#4ECB71';document.querySelector('label:has([value=coupable])').style.borderColor='rgba(255,71,87,.2)'">
+<div style="font-size:20px;font-weight:900;color:#4ECB71">ACQUITTÉ</div>
+<div style="font-size:10px;color:#505068">Non coupable</div>
+</label>
+<label style="flex:1;padding:14px;background:rgba(255,71,87,.06);border:2px solid rgba(255,71,87,.2);border-radius:12px;text-align:center;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px">
+<input type="radio" name="vdecision" value="coupable" style="display:none" onclick="this.closest('label').style.borderColor='#FF4757';document.querySelector('label:has([value=acquitte])').style.borderColor='rgba(78,203,113,.2)'">
+<div style="font-size:20px;font-weight:900;color:#FF4757">COUPABLE</div>
+<div style="font-size:10px;color:#505068">Reconnu coupable</div>
+</label>
+</div>
+<textarea id="v-motivation" style="width:100%;padding:12px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,210,63,.15);border-radius:12px;color:#fff;font-size:13px;font-family:inherit;outline:none;resize:none;height:80px;line-height:1.5" placeholder="Motivez votre décision..."></textarea>
+<button style="padding:12px;background:linear-gradient(135deg,#C8A44E,#FFD23F);border:none;border-radius:12px;font-size:14px;font-weight:800;color:#0C0C12;cursor:pointer" onclick="publishVerdict()">Publier le verdict</button>
+</div>
+
+<!-- WAITING FOR VERDICT (others) -->
+<div id="verdict-wait" style="display:none;align-items:center;justify-content:center;padding:16px;border-top:1px solid rgba(255,210,63,.1);background:rgba(255,210,63,.02);gap:10px">
+<div style="width:12px;height:12px;border:2px solid #FFD23F;border-top-color:transparent;border-radius:50%;animation:spin 1s linear infinite"></div>
+<div style="font-size:13px;font-weight:700;color:#FFD23F">Le Président rédige son verdict...</div>
+</div>
+<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
+
+<!-- REQUEST WORD (defense & accusation only) -->
+<div id="request-word" style="display:none;padding:6px 14px;border-top:1px solid rgba(255,255,255,.04)">
+<button id="req-btn" style="width:100%;padding:10px;background:rgba(255,210,63,.08);border:1.5px solid rgba(255,210,63,.2);border-radius:12px;color:#FFD23F;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px" onclick="requestWord()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFD23F" stroke-width="2.5" stroke-linecap="round"><path d="M12 1v14M5 8l7-7 7 7"/></svg>Demander la parole</button>
+</div>
+<!-- REACTIONS BAR -->
+<div style="padding:4px 14px;display:flex;gap:6px;border-top:1px solid rgba(255,255,255,.04);overflow-x:auto" id="react-bar">
+<button class="rbtn" onclick="sendReact('😂')">😂</button>
+<button class="rbtn" onclick="sendReact('🔥')">🔥</button>
+<button class="rbtn" onclick="sendReact('😤')">😤</button>
+<button class="rbtn" onclick="sendReact('👏')">👏</button>
+<button class="rbtn" onclick="sendReact('💀')">💀</button>
+<button class="rbtn" onclick="sendReact('👀')">👀</button>
+<button class="rbtn" onclick="sendReact('❌')">❌</button>
+<button class="rbtn" onclick="sendReact('✅')">✅</button>
+</div>
 <!-- INPUT -->
-<div style="padding:8px 14px;display:flex;gap:8px;border-top:1px solid rgba(255,255,255,.07);align-items:center">
-<button id="mic-btn" style="width:44px;height:44px;border-radius:50%;background:#1E1E2E;border:1.5px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0" onclick="toggleAudio()"><svg id="mic-ico" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8888A0" stroke-width="2" stroke-linecap="round"><rect x="9" y="1" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0014 0"/><line x1="12" y1="17" x2="12" y2="22"/></svg></button>
-<input class="inp" id="ci" type="text" placeholder="Écrire..." style="padding:12px 14px;font-size:13px;border-radius:99px" onkeydown="if(event.key==='Enter')sendCom()">
+<div style="padding:6px 14px 8px;display:flex;gap:8px;align-items:center">
+<button id="mic-btn" style="width:40px;height:40px;border-radius:50%;background:#1E1E2E;border:1.5px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0" onclick="toggleAudio()"><svg id="mic-ico" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#8888A0" stroke-width="2" stroke-linecap="round"><rect x="9" y="1" width="6" height="11" rx="3"/><path d="M5 10a7 7 0 0014 0"/><line x1="12" y1="17" x2="12" y2="22"/></svg></button>
+<input class="inp" id="ci" type="text" placeholder="Écrire..." style="padding:10px 14px;font-size:13px;border-radius:99px" onkeydown="if(event.key==='Enter')sendCom()">
 <button style="padding:10px 16px;background:linear-gradient(135deg,#FF7A2E,#FFA04E);border:none;border-radius:99px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap" onclick="sendCom()">Envoyer</button>
 </div>
 <audio id="remote-audio" autoplay style="display:none"></audio>
@@ -451,7 +487,7 @@ body{background:#08080C;color:#F0F0F5;font-family:-apple-system,BlinkMacSystemFo
 <script>
 var cur='splash';
 var stack=[];
-var me={name:'',client:null};
+var me={name:'',client:null,cabinet:'',wins:0,losses:0,points:0};
 
 function go(id){
 document.getElementById(cur).classList.remove('on');
@@ -466,7 +502,7 @@ cur=stack.pop();
 document.getElementById(cur).classList.add('on');
 }
 function switchTab(id){
-['home','avenir','verdicts','classement','profil'].forEach(function(t){document.getElementById(t).classList.remove('on')});
+['home','verdicts','classement','profil'].forEach(function(t){document.getElementById(t).classList.remove('on')});
 document.getElementById(id).classList.add('on');
 cur=id;stack=[];
 }
@@ -485,7 +521,22 @@ me.cabinet=cab||'Cabinet indépendant';
 setUid(e);
 document.getElementById('p-name').textContent=n;
 document.getElementById('p-cab').textContent=me.cabinet;
-document.getElementById('p-w').textContent='250';
+
+/* Save user to Firebase */
+function saveUser(){
+if(!window.db)return setTimeout(saveUser,1000);
+window.db.ref('users/'+myUid).set({
+name:me.name,
+cabinet:me.cabinet,
+email:e,
+wins:0,
+losses:0,
+points:0,
+joined:Date.now()
+});
+}
+saveUser();
+document.getElementById('p-w').textContent='0';
 go('onb1');
 }
 function doLogin(){
@@ -494,10 +545,9 @@ var p=document.getElementById('li-p').value;
 document.getElementById('e4').style.display=e?'none':'block';
 document.getElementById('e5').style.display=p.length>=6?'none':'block';
 if(!e||p.length<6)return;
-me.name='Maître';
+me.name='';
 document.getElementById('p-name').textContent='Maître';
 buildHome();
-buildAvenir();
 go('home');
 }
 
@@ -734,6 +784,10 @@ var roomListener=null;
 function joinRoom(caseId){
 currentRoom=caseId;
 if(!window.db)return;
+/* Clear old messages */
+window.db.ref('rooms/'+caseId+'/comments').remove();
+window.db.ref('rooms/'+caseId+'/requests').remove();
+window.db.ref('rooms/'+caseId+'/verdict').remove();
 /* Register as player */
 var playerRef=window.db.ref('rooms/'+caseId+'/players/'+myUid);
 playerRef.set({name:me.name||'Maître',joined:Date.now()});
@@ -749,7 +803,7 @@ if(roomListener)window.db.ref('rooms/'+currentRoom+'/comments').off();
 window.db.ref('rooms/'+caseId+'/comments').orderByChild('ts').limitToLast(50).on('child_added',function(snap){
 var m=snap.val();
 if(m.uid===myUid)return;
-addC(m.name,m.text,m.color||'#7C5CFC');
+addC(cleanMsg(m.name),cleanMsg(m.text),m.color||'#7C5CFC');
 });
 }
 
@@ -771,7 +825,7 @@ uid:myUid,name:name,text:text,color:color,ts:Date.now()
 }
 
 buildHome();
-buildAvenir();go('home')};
+go('home')};
 el.appendChild(d);
 });
 go('choose');
@@ -909,6 +963,81 @@ inp.style.borderColor='#4ECB71';
 setTimeout(function(){inp.style.borderColor='rgba(255,255,255,.07)'},2000);
 }
 
+/* UPDATE USER STATS */
+/* REQUEST WORD */
+function requestWord(){
+var btn=document.getElementById('req-btn');
+btn.textContent='Parole demandée...';
+btn.style.borderColor='#FFA04E';
+btn.style.color='#FFA04E';
+btn.onclick=null;
+/* Notify judge via Firebase */
+if(window.db&&currentRoom){
+window.db.ref('rooms/'+currentRoom+'/requests').push({
+uid:myUid,
+name:me.name||'',
+role:myRole,
+timestamp:Date.now()
+});
+}
+/* Also show in chat for judge */
+var label=myRole==='defense'?'Défense':'Accusation';
+sendComToFirebase(label+' · '+(me.name||''),'demande la parole',myRole==='defense'?'#4ECB71':'#FF4757');
+/* Reset after 5s */
+setTimeout(function(){
+btn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFD23F" stroke-width="2.5" stroke-linecap="round"><path d="M12 1v14M5 8l7-7 7 7"/></svg>Demander la parole';
+btn.style.borderColor='rgba(255,210,63,.2)';
+btn.style.color='#FFD23F';
+btn.onclick=requestWord;
+},5000);
+}
+
+/* Listen for word requests (judge only) */
+function listenRequests(){
+if(!window.db||!currentRoom||myRole!=='juge')return;
+window.db.ref('rooms/'+currentRoom+'/requests').on('child_added',function(snap){
+var r=snap.val();
+var label=r.role==='defense'?'Défense':'Accusation';
+var color=r.role==='defense'?'#4ECB71':'#FF4757';
+addC(label+' · '+(r.name||''),'demande la parole',color,true);
+});
+}
+
+function addWin(){
+me.wins=(me.wins||0)+1;
+me.points=(me.points||0)+4;
+document.getElementById('p-w').textContent=me.wins;
+if(window.db){
+window.db.ref('users/'+myUid+'/wins').set(me.wins);
+window.db.ref('users/'+myUid+'/points').set(me.points);
+}
+}
+function addLoss(){
+me.losses=(me.losses||0)+1;
+me.points=(me.points||0)+1;
+if(window.db){
+window.db.ref('users/'+myUid+'/losses').set(me.losses);
+window.db.ref('users/'+myUid+'/points').set(me.points);
+}
+}
+
+function sendReact(emoji){
+/* Float the emoji up from the reaction bar */
+var bar=document.getElementById('react-bar');
+var rect=bar.getBoundingClientRect();
+var audPage=document.getElementById('audience');
+var d=document.createElement('div');
+d.className='float-react';
+d.textContent=emoji;
+d.style.left=Math.floor(Math.random()*200+50)+'px';
+d.style.bottom='120px';
+audPage.appendChild(d);
+setTimeout(function(){d.remove()},1500);
+/* Send as comment */
+addC(me.name||'',emoji,(myRole==='defense'?'#4ECB71':myRole==='accusation'?'#FF4757':myRole==='juge'?'#FFD23F':'#8888A0'));
+sendComToFirebase(me.name||'',(emoji),(myRole==='defense'?'#4ECB71':myRole==='accusation'?'#FF4757':myRole==='juge'?'#FFD23F':'#8888A0'));
+}
+
 function postVC(vid){
 var inp=document.getElementById('vc-i'+vid);
 var t=inp.value.trim();if(!t||t.length>140)return;
@@ -921,79 +1050,6 @@ d.style.cssText='display:flex;gap:8px';
 d.innerHTML='<div style="font-size:11px;font-weight:700;color:'+c+';white-space:nowrap">'+(me.name||'Maître')+'</div><div style="font-size:12px;color:#8888A0">'+t+'</div>';
 el.appendChild(d);el.scrollTop=el.scrollHeight;
 if(window.db){window.db.ref('verdicts/v'+vid+'/comments').push({name:me.name||'Maître',text:t,ts:Date.now()})}
-}
-
-function buildAvenir(){
-var schedule=[
-/* TODAY */
-{id:'boris',day:'today',time:'15h00',t:'Docteur Boris',s:'Docteur Boris',roles:{juge:null,defense:null,accusation:null}},
-{id:'eniola',day:'today',time:'17h00',t:'Eniola — Corruption',s:'King of Boys',roles:{juge:null,defense:null,accusation:null}},
-{id:'vinz',day:'today',time:'19h00',t:'Vinz — Détention d\'arme',s:'La Haine',roles:{juge:null,defense:null,accusation:null}},
-{id:'gojo',day:'today',time:'21h00',t:'Gojo — Insubordination',s:'Jujutsu Kaisen',roles:{juge:null,defense:null,accusation:null}},
-/* TOMORROW */
-{id:'assane',day:'tomorrow',time:'14h00',t:'Assane — Usurpation',s:'Lupin',roles:{juge:null,defense:null,accusation:null}},
-{id:'scar',day:'tomorrow',time:'16h00',t:'Scar — Régicide',s:'Le Roi Lion',roles:{juge:null,defense:null,accusation:null}},
-{id:'tag',day:'tomorrow',time:'18h00',t:'Tag — Vol de stratégie',s:'Foot de Rue',roles:{juge:null,defense:null,accusation:null}},
-{id:'itachi',day:'tomorrow',time:'20h00',t:'Itachi — Massacre du clan',s:'Naruto',roles:{juge:null,defense:null,accusation:null}},
-/* WEEK */
-{id:'bloom',day:'week',time:'Sam. 14h',t:'Bloom — Trahison magique',s:'Winx Club',roles:{juge:null,defense:null,accusation:null}},
-{id:'luffy',day:'week',time:'Sam. 17h',t:'Luffy — Piraterie',s:'One Piece',roles:{juge:null,defense:null,accusation:null}},
-{id:'adrien',day:'week',time:'Dim. 14h',t:'Adrien — Double identité',s:'Miraculous',roles:{juge:null,defense:null,accusation:null}},
-{id:'shrek',day:'week',time:'Dim. 17h',t:'Shrek — Trouble public',s:'Shrek',roles:{juge:null,defense:null,accusation:null}},
-{id:'queen',day:'week',time:'Lun. 15h',t:'Queen Sono — Trahison',s:'Queen Sono',roles:{juge:null,defense:null,accusation:null}},
-{id:'tanjiro',day:'week',time:'Lun. 18h',t:'Tanjiro — Complicité',s:'Demon Slayer',roles:{juge:null,defense:null,accusation:null}}
-];
-var todayEl=document.getElementById('av-today');
-var tomorrowEl=document.getElementById('av-tomorrow');
-var weekEl=document.getElementById('av-week');
-if(!todayEl)return;
-todayEl.innerHTML='';tomorrowEl.innerHTML='';weekEl.innerHTML='';
-
-schedule.forEach(function(s){
-var target=s.day==='today'?todayEl:s.day==='tomorrow'?tomorrowEl:weekEl;
-var d=document.createElement('div');
-d.style.cssText='padding:14px;background:#161622;border:1px solid rgba(255,255,255,.07);border-radius:16px';
-var rolesHtml='<div style="display:flex;gap:6px;margin-top:10px">';
-['juge','defense','accusation'].forEach(function(role){
-var label=role==='juge'?'Président':role==='defense'?'Défense':'Accusation';
-var color=role==='juge'?'#FFD23F':role==='defense'?'#4ECB71':'#FF4757';
-var taken=s.roles[role];
-if(taken){
-rolesHtml+='<div style="flex:1;padding:8px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.05);border-radius:10px;text-align:center;opacity:.4"><div style="font-size:10px;font-weight:700;color:#505068">'+label+'</div><div style="font-size:9px;color:#505068;margin-top:2px">Pris</div></div>';
-}else{
-rolesHtml+='<div style="flex:1;padding:8px;background:rgba('+( role==='juge'?'255,210,63':role==='defense'?'78,203,113':'255,71,87')+',.06);border:1px solid rgba('+( role==='juge'?'255,210,63':role==='defense'?'78,203,113':'255,71,87')+',.15);border-radius:10px;text-align:center;cursor:pointer" onclick="reserveRole(\''+s.id+'\',\''+role+'\')">';
-rolesHtml+='<div style="font-size:10px;font-weight:700;color:'+color+'">'+label+'</div>';
-rolesHtml+='<div style="font-size:9px;color:#4ECB71;margin-top:2px">Libre</div></div>';
-}
-});
-rolesHtml+='</div>';
-
-d.innerHTML='<div style="display:flex;align-items:center;gap:12px"><div style="min-width:50px;text-align:center"><div style="font-size:16px;font-weight:900;color:#FFA04E">'+s.time+'</div></div><div style="flex:1"><div style="font-size:14px;font-weight:800">'+s.t+'</div><div style="font-size:11px;color:#505068">'+s.s+'</div></div></div>'+rolesHtml;
-target.appendChild(d);
-});
-}
-
-function reserveRole(caseId,role){
-/* Reserve role and go to case */
-curCase=caseId;
-myRole=role;
-var c=CASES[caseId];
-if(!c){return}
-/* Claim in Firebase */
-if(window.db){
-var ref=window.db.ref('rooms/'+caseId+'/roles/'+role);
-ref.set({uid:myUid,name:me.name||'Maître'});
-ref.onDisconnect().remove();
-}
-if(role==='juge'){
-enterAud();
-}else{
-document.getElementById('pr-name').textContent=c.n;
-document.getElementById('pr-type').textContent=c.t;
-document.getElementById('pr-dos').textContent=c.dos;
-startPrep(c.pt);
-go('prep');
-}
 }
 
 function buildHome(){
@@ -1084,18 +1140,6 @@ html+='<div style="font-size:9px;color:#505068;margin-top:4px">'+s.s+'</div></di
 });
 html+='</div>';
 
-/* PROCHAINES AUDIENCES */
-html+='<div style="font-size:13px;font-weight:800;color:#8888A0;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px">Prochaines audiences</div>';
-html+='<div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">';
-var upcom=[{id:'boris',time:'Auj. 15h',roles:'2 rôles libres'},{id:'eniola',time:'Auj. 17h',roles:'3 rôles libres'},{id:'assane',time:'Demain 14h',roles:'2 rôles libres'},{id:'scar',time:'Demain 16h',roles:'3 rôles libres'},{id:'tag',time:'Demain 18h',roles:'2 rôles libres'},{id:'bloom',time:'Sam. 14h',roles:'3 rôles libres'}];
-upcom.forEach(function(u){var c=CASES[u.id];if(!c)return;
-html+='<div style="display:flex;align-items:center;gap:12px;padding:12px 14px;background:#161622;border:1px solid rgba(255,255,255,.07);border-radius:14px;cursor:pointer" onclick="joinCase(\''+u.id+'\')">';
-html+='<div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#2D1B69,#1E1245);border:2px solid #FFD23F;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff">'+c.d.substring(0,2).toUpperCase()+'</div>';
-html+='<div style="flex:1"><div style="font-size:13px;font-weight:700">'+c.n+'</div><div style="font-size:10px;color:#505068">'+c.t+'</div></div>';
-html+='<div style="text-align:right"><div style="font-size:10px;font-weight:700;color:#FFA04E">'+u.time+'</div><div style="font-size:9px;color:#4ECB71;margin-top:2px">'+u.roles+'</div></div></div>';
-});
-html+='</div>';
-
 /* EN ATTENTE */
 html+='<div style="font-size:13px;font-weight:800;color:#8888A0;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px">En attente · 3 joueurs min.</div>';
 html+='<div style="display:flex;gap:14px;overflow-x:auto;padding-bottom:20px;-webkit-overflow-scrolling:touch">';
@@ -1108,7 +1152,23 @@ html+='<div style="height:20px"></div>';
 h.innerHTML=html;
 }
 
+/* TRACK PREFERENCES */
+function trackView(id){
+try{
+var v=JSON.parse(localStorage.getItem('gV')||'{}');
+v[id]=(v[id]||0)+1;
+localStorage.setItem('gV',JSON.stringify(v));
+}catch(e){}
+}
+function getTopCases(){
+try{
+var v=JSON.parse(localStorage.getItem('gV')||'{}');
+return Object.entries(v).sort(function(a,b){return b[1]-a[1]}).map(function(e){return e[0]});
+}catch(e){return[]}
+}
+
 function joinCase(id){
+trackView(id);
 var c=CASES[id];if(!c)return;
 curCase=id;
 document.getElementById('rp-case').textContent=c.n;
@@ -1244,15 +1304,20 @@ document.getElementById('s-dn').textContent='En attente';
 }else if(myRole==='juge'){
 document.getElementById('pres-name').textContent=me.name||'Vous';
 }
+/* Label under President */
+document.getElementById('pres-label').textContent='PRÉSIDENT';
 /* Show judge controls only for judge */
 var jc=document.getElementById('juge-controls');
 if(myRole==='juge'){jc.style.display='flex'}else{jc.style.display='none'}
 document.getElementById('coms').innerHTML='';
+var myA=document.getElementById('my-args');if(myA)myA.innerHTML='';
 go('audience');
 joinRoom(curCase);
 publishPeerId(curCase);
 addC('Président','L\'audience est ouverte. '+c.q+'.','#FFD23F');
 startTurnDebate();
+if(myRole!=='juge')listenVerdict();
+if(myRole==='juge')listenRequests();
 }
 /* TURN-BASED DEBATE - JUDGE CONTROLS */
 var turnRound=0;
@@ -1265,9 +1330,42 @@ var turnInt=null;
 var paused=false;
 
 function startTurnDebate(){
-turnRound=1;turnSide='defense';turnLeft=60;roundsDef=0;roundsAcc=0;paused=false;
+turnRound=0;turnSide='intro';turnLeft=0;roundsDef=0;roundsAcc=0;paused=false;
+/* Intro phase: Judge presents the case */
+var badge=document.getElementById('turn-badge');
+if(badge){badge.textContent='PRÉSENTATION DE L\'AFFAIRE';badge.style.background='rgba(255,210,63,.1)';badge.style.color='#FFD23F';badge.style.border='1px solid rgba(255,210,63,.2)'}
+document.getElementById('a-timer').textContent='--:--';
+document.getElementById('a-timer').style.color='#FFD23F';
+if(myRole==='juge'){
+document.getElementById('ci').placeholder='Présentez l\'affaire aux parties...';
+/* Show start button for judge */
+var jc=document.getElementById('juge-controls');
+if(jc){
+jc.innerHTML='<button style="flex:1;padding:10px;background:rgba(78,203,113,.1);border:1px solid rgba(78,203,113,.2);border-radius:10px;color:#4ECB71;font-size:12px;font-weight:700;cursor:pointer" onclick="judgeStartDebate()">Donner la parole à la Défense</button><button style="flex:1;padding:10px;background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.2);border-radius:10px;color:#FF4757;font-size:12px;font-weight:700;cursor:pointer" onclick="judgeStartAccusation()">Donner la parole à l\'Accusation</button>';
+}
+}else{
+document.getElementById('ci').placeholder='Le Président présente l\'affaire...';
+}
+}
+
+function judgeStartDebate(){
+turnRound=1;turnSide='defense';turnLeft=60;
 showTurnBanner();
 runTurnTimer();
+/* Restore judge controls */
+var jc=document.getElementById('juge-controls');
+if(jc){
+jc.innerHTML='<button style="flex:1;padding:8px;background:rgba(78,203,113,.1);border:1px solid rgba(78,203,113,.2);border-radius:10px;color:#4ECB71;font-size:11px;font-weight:700;cursor:pointer" onclick="judgeGiveWord(\'defense\')">Parole Défense</button><button style="padding:8px 12px;background:rgba(255,210,63,.1);border:1px solid rgba(255,210,63,.2);border-radius:10px;color:#FFD23F;font-size:11px;font-weight:700;cursor:pointer" onclick="judgePause()"><span id="pause-label">Pause</span></button><button style="flex:1;padding:8px;background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.2);border-radius:10px;color:#FF4757;font-size:11px;font-weight:700;cursor:pointer" onclick="judgeGiveWord(\'accusation\')">Parole Accusation</button>';
+}
+}
+function judgeStartAccusation(){
+turnRound=1;turnSide='accusation';turnLeft=60;
+showTurnBanner();
+runTurnTimer();
+var jc=document.getElementById('juge-controls');
+if(jc){
+jc.innerHTML='<button style="flex:1;padding:8px;background:rgba(78,203,113,.1);border:1px solid rgba(78,203,113,.2);border-radius:10px;color:#4ECB71;font-size:11px;font-weight:700;cursor:pointer" onclick="judgeGiveWord(\'defense\')">Parole Défense</button><button style="padding:8px 12px;background:rgba(255,210,63,.1);border:1px solid rgba(255,210,63,.2);border-radius:10px;color:#FFD23F;font-size:11px;font-weight:700;cursor:pointer" onclick="judgePause()"><span id="pause-label">Pause</span></button><button style="flex:1;padding:8px;background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.2);border-radius:10px;color:#FF4757;font-size:11px;font-weight:700;cursor:pointer" onclick="judgeGiveWord(\'accusation\')">Parole Accusation</button>';
+}
 }
 
 function showTurnBanner(){
@@ -1277,6 +1375,14 @@ var color=side==='defense'?'#4ECB71':'#FF4757';
 var badge=document.getElementById('turn-badge');
 if(badge){badge.textContent=label;badge.style.background=side==='defense'?'rgba(78,203,113,.1)':'rgba(255,71,87,.1)';badge.style.color=color;badge.style.border='1px solid '+(side==='defense'?'rgba(78,203,113,.2)':'rgba(255,71,87,.2)')}
 addC('Président',label,color);
+/* Also show turn info in arg-zone for lawyers */
+var argEl=document.getElementById('my-args');
+if(argEl&&(myRole==='defense'||myRole==='accusation')){
+var td=document.createElement('div');
+td.style.cssText='text-align:center;padding:8px;font-size:11px;font-weight:700;color:'+color+';letter-spacing:1px';
+td.textContent=label;
+argEl.appendChild(td);
+}
 document.getElementById('a-timer').style.color=color;
 /* Input state */
 updateInput();
@@ -1285,7 +1391,9 @@ updateInput();
 function updateInput(){
 var canSpeak=(myRole===turnSide)||(myRole==='juge');
 var isSpec=(myRole==='spectateur');
-if(paused){
+if(turnSide==='intro'&&myRole!=='juge'&&!isSpec){
+document.getElementById('ci').placeholder='Le Président présente l\'affaire...';
+}else if(paused){
 document.getElementById('ci').placeholder='Audience en pause...';
 }else if(isSpec){
 document.getElementById('ci').placeholder='Commenter...';
@@ -1353,35 +1461,148 @@ window.db.ref('rooms/'+currentRoom+'/paused').set(paused);
 }
 
 function endDebate(){
-addC('Président','L\'audience est terminée. Le verdict sera rendu.','#FFD23F');
-document.getElementById('ci').placeholder='Audience terminée';
+addC('Président','L\'audience est terminée. Le verdict va être rendu.','#FFD23F');
 document.getElementById('a-timer').textContent='FIN';
 document.getElementById('a-timer').style.color='#FFD23F';
 document.getElementById('a-bar').style.width='0%';
 var badge=document.getElementById('turn-badge');
 if(badge){badge.textContent='VERDICT';badge.style.background='rgba(255,210,63,.1)';badge.style.color='#FFD23F';badge.style.border='1px solid rgba(255,210,63,.2)'}
-setTimeout(function(){
-var defWin=Math.random()>0.45;
-var pct=Math.floor(50+Math.random()*25);
-var otherPct=100-pct;
-if(defWin){
-addC('Président','ACQUITTÉ — Défense l\'emporte '+pct+'% contre '+otherPct+'%','#4ECB71');
+/* Show verdict panel to judge, waiting screen to others */
+if(myRole==='juge'){
+document.getElementById('verdict-panel').style.display='flex';
+document.getElementById('ci').placeholder='Rédigez votre verdict ci-dessus';
 }else{
-addC('Président','COUPABLE — Accusation l\'emporte '+pct+'% contre '+otherPct+'%','#FF4757');
+document.getElementById('ci').placeholder='En attente du verdict...';
+document.getElementById('verdict-wait').style.display='flex';
+/* Show wait in arg zone too */
+var argEl=document.getElementById('my-args');
+if(argEl){
+var wd=document.createElement('div');
+wd.style.cssText='text-align:center;padding:16px;font-size:13px;font-weight:700;color:#FFD23F';
+wd.textContent='Le Président rédige son verdict...';
+argEl.appendChild(wd);
 }
-},3000);
+}
 }
 
-function addC(name,text,color){
+function publishVerdict(){
+var decision=document.querySelector('input[name="vdecision"]:checked');
+if(!decision)return;
+var motivation=document.getElementById('v-motivation').value.trim();
+if(!motivation)return;
+var isGuilty=decision.value==='coupable';
+var color=isGuilty?'#FF4757':'#4ECB71';
+var label=isGuilty?'COUPABLE':'ACQUITTÉ';
+
+/* Hide panel */
+document.getElementById('verdict-panel').style.display='none';
+
+/* Show verdict in chat */
+addC('Président','━━━━ VERDICT ━━━━','#FFD23F');
+addC('Président',label+' — '+motivation,color);
+
+/* Broadcast to Firebase */
+if(window.db&&currentRoom){
+var c=CASES[curCase];
+window.db.ref('rooms/'+currentRoom+'/verdict').set({
+decision:label,
+motivation:motivation,
+judge:me.name||'Président',
+caseName:c?c.n:'',
+caseType:c?c.t:'',
+timestamp:Date.now()
+});
+/* Save to verdicts feed */
+window.db.ref('verdicts').push({
+decision:label,
+motivation:motivation,
+judge:me.name||'Président',
+caseName:c?c.n:'',
+caseType:c?c.t:'',
+timestamp:Date.now()
+});
+}
+
+/* Show result to everyone */
+setTimeout(function(){
+addC('Président','L\'audience est levée.','#FFD23F');
+},2000);
+
+/* Add verdict to the public verdicts page */
+var c=CASES[curCase];
+var vdScroll=document.getElementById('vd-scroll');
+if(vdScroll){
+/* Remove empty state if present */
+var emptyState=vdScroll.querySelector('[style*="min-height:300px"]');
+if(emptyState)emptyState.remove();
+
+var vCard=document.createElement('div');
+vCard.style.cssText='min-height:calc(100dvh - 150px);scroll-snap-align:start;display:flex;flex-direction:column;padding:20px;border-bottom:1px solid rgba(255,255,255,.06)';
+var badgeColor=isGuilty?'rgba(255,71,87,.08)':'rgba(78,203,113,.08)';
+var badgeBorder=isGuilty?'rgba(255,71,87,.2)':'rgba(78,203,113,.2)';
+var pct=Math.floor(50+Math.random()*25);
+var otherPct=100-pct;
+vCard.innerHTML='<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#3D3520,#2A2418);border:2px solid #FFD23F;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#FFD23F">PR</div><div style="flex:1"><div style="font-size:14px;font-weight:700;color:#FFD23F">Président '+(me.name||'')+'</div><div style="font-size:10px;color:#505068">'+(c?c.t:'')+'</div></div><div style="font-size:10px;font-weight:800;padding:5px 12px;border-radius:8px;background:'+badgeColor+';color:'+color+';border:1px solid '+badgeBorder+'">'+label+'</div></div><div style="font-size:22px;font-weight:900;line-height:1.3;margin-bottom:8px">'+(c?c.n:'Affaire')+'</div><div style="font-size:14px;color:#8888A0;line-height:1.6;margin-bottom:16px">'+motivation+'</div><div style="display:flex;gap:8px;margin-bottom:6px"><div style="flex:1;height:8px;background:rgba(78,203,113,.12);border-radius:99px;overflow:hidden"><div style="width:'+(isGuilty?otherPct:pct)+'%;height:100%;background:#4ECB71;border-radius:99px"></div></div><div style="flex:1;height:8px;background:rgba(255,71,87,.12);border-radius:99px;overflow:hidden"><div style="width:'+(isGuilty?pct:otherPct)+'%;height:100%;background:#FF4757;border-radius:99px"></div></div></div><div style="display:flex;justify-content:space-between;margin-bottom:16px"><div style="font-size:11px;color:#4ECB71;font-weight:700">'+(isGuilty?otherPct:pct)+'% Acquitté</div><div style="font-size:11px;color:#FF4757;font-weight:700">'+(isGuilty?pct:otherPct)+'% Coupable</div></div><div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end"><div style="font-size:11px;font-weight:700;color:#505068;margin-bottom:8px">Réactions</div><div style="display:flex;flex-direction:column;gap:6px;max-height:140px;overflow-y:auto;margin-bottom:8px" id="vc-new-'+Date.now()+'"></div><div style="display:flex;gap:8px"><input class="inp" maxlength="140" placeholder="Votre avis (140 car.)" style="padding:10px 12px;font-size:12px;border-radius:99px"><button style="padding:8px 14px;background:linear-gradient(135deg,#FF7A2E,#FFA04E);border:none;border-radius:99px;color:#fff;font-size:11px;font-weight:700;cursor:pointer;white-space:nowrap">Poster</button></div></div>';
+vdScroll.insertBefore(vCard,vdScroll.firstChild);
+}
+}
+
+/* Listen for verdict from judge (for non-judges) */
+function listenVerdict(){
+if(!window.db||!currentRoom)return;
+window.db.ref('rooms/'+currentRoom+'/verdict').on('value',function(snap){
+var v=snap.val();
+if(!v)return;
+document.getElementById('verdict-wait').style.display='none';
+var color=v.decision==='COUPABLE'?'#FF4757':'#4ECB71';
+addC('Président','━━━━ VERDICT ━━━━','#FFD23F');
+addC('Président',v.decision+' — '+v.motivation,color);
+setTimeout(function(){addC('Président','L\'audience est levée.','#FFD23F')},2000);
+/* Add to verdicts feed */
+var c=CASES[curCase];
+var vdScroll=document.getElementById('vd-scroll');
+if(vdScroll&&c){
+var emptyState=vdScroll.querySelector('[style*="min-height:300px"]');
+if(emptyState)emptyState.remove();
+var isG=v.decision==='COUPABLE';
+var pct=Math.floor(50+Math.random()*25);var oP=100-pct;
+var vCard=document.createElement('div');
+vCard.style.cssText='min-height:calc(100dvh - 150px);scroll-snap-align:start;display:flex;flex-direction:column;padding:20px;border-bottom:1px solid rgba(255,255,255,.06)';
+vCard.innerHTML='<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#3D3520,#2A2418);border:2px solid #FFD23F;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#FFD23F">PR</div><div style="flex:1"><div style="font-size:14px;font-weight:700;color:#FFD23F">Président '+(v.judge||'')+'</div><div style="font-size:10px;color:#505068">'+c.t+'</div></div><div style="font-size:10px;font-weight:800;padding:5px 12px;border-radius:8px;background:rgba('+(isG?'255,71,87':'78,203,113')+',.08);color:'+(isG?'#FF4757':'#4ECB71')+';border:1px solid rgba('+(isG?'255,71,87':'78,203,113')+',.2)">'+v.decision+'</div></div><div style="font-size:22px;font-weight:900;line-height:1.3;margin-bottom:8px">'+c.n+'</div><div style="font-size:14px;color:#8888A0;line-height:1.6;margin-bottom:16px">'+v.motivation+'</div>';
+vdScroll.insertBefore(vCard,vdScroll.firstChild);
+}
+});
+}
+
+function addC(name,text,color,forceShow){
+/* Defense & Accusation only see: president (gold) + their own messages */
+if(!forceShow && (myRole==='defense'||myRole==='accusation')){
+var isPresident=(color==='#FFD23F');
+var isOwn=(name===(me.name||''));
+var isEmoji=/^[\p{Emoji}\s]+$/u.test(text);
+if(!isPresident && !isOwn && !isEmoji)return;
+}
 var el=document.getElementById('coms');
 var d=document.createElement('div');d.className='com';
-d.innerHTML='<div style="width:24px;height:24px;border-radius:50%;background:'+color+';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff;flex-shrink:0">'+name.substring(0,2).toUpperCase()+'</div><span style="font-size:11px;font-weight:700;color:'+color+';white-space:nowrap">'+name+'</span><span style="font-size:12px;color:rgba(255,255,255,.85)">'+text+'</span>';
+var now=new Date();var ts=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
+var safeName=String(name||'').replace(/</g,'&lt;');var safeText=String(text||'').replace(/</g,'&lt;');
+d.innerHTML='<div style="width:26px;height:26px;border-radius:50%;background:'+color+';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff;flex-shrink:0">'+name.substring(0,2).toUpperCase()+'</div><div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:6px"><span style="font-size:11px;font-weight:700;color:'+color+'">'+name+'</span><span style="font-size:9px;color:#505068">'+ts+'</span></div><div style="font-size:13px;color:rgba(255,255,255,.9);line-height:1.4;margin-top:2px">'+safeText+'</div></div>';
 el.appendChild(d);
 while(el.children.length>20)el.removeChild(el.firstChild);
 el.scrollTop=el.scrollHeight;
 }
+/* CONTENT FILTER */
+var BLOCKED=['putain','merde','connard','connasse','salope','nique','pute','fuck','shit','bitch','asshole','nigger','nigga'];
+function cleanMsg(t){
+if(!t)return'';
+var c=String(t).replace(/<[^>]*>/g,'').replace(/[<>]/g,'');
+var low=c.toLowerCase();
+for(var i=0;i<BLOCKED.length;i++){if(low.indexOf(BLOCKED[i])!==-1)return'[message filtré]'}
+return c.length>300?c.substring(0,300):c;
+}
+
 function sendCom(){
-var inp=document.getElementById('ci');var t=inp.value.trim();if(!t)return;
+var inp=document.getElementById('ci');var t=cleanMsg(inp.value.trim());if(!t)return;
 if(paused&&myRole!=='juge'){inp.placeholder='Audience en pause';return}
 /* Spectateurs commentent en gris */
 if(myRole==='spectateur'){
@@ -1393,16 +1614,26 @@ return;
 /* Juge parle toujours en doré */
 if(myRole==='juge'){
 inp.value='';
-addC(me.name||'Président',t,'#FFD23F');
-sendComToFirebase(me.name||'Président',t,'#FFD23F');
+addC('Président '+( me.name||''),t,'#FFD23F');
+sendComToFirebase('Président '+(me.name||''),t,'#FFD23F');
 return;
 }
 /* Defense/Accusation: only during their turn */
 if(myRole!==turnSide){inp.placeholder='Attendez votre tour...';return}
 inp.value='';
 var color=myRole==='defense'?'#4ECB71':'#FF4757';
-addC(me.name||'Maître',t,color);
-sendComToFirebase(me.name||'Maître',t,color);
+var label=myRole==='defense'?'Défense':'Accusation';
+/* Show in their private arg zone */
+var argEl=document.getElementById('my-args');
+if(argEl){
+var ad=document.createElement('div');
+ad.style.cssText='padding:10px 14px;background:rgba('+(myRole==='defense'?'78,203,113':'255,71,87')+',.08);border:1px solid rgba('+(myRole==='defense'?'78,203,113':'255,71,87')+',.15);border-radius:12px';
+ad.innerHTML='<div style="font-size:10px;font-weight:700;color:'+color+';margin-bottom:3px">'+label+'</div><div style="font-size:13px;color:#fff;line-height:1.5">'+t+'</div>';
+argEl.appendChild(ad);
+argEl.scrollTop=argEl.scrollHeight;
+}
+/* Send to Firebase so judge and spectators see it */
+sendComToFirebase(label+' · '+(me.name||''),t,color);
 
 }
 
@@ -1569,6 +1800,10 @@ var roomListener=null;
 function joinRoom(caseId){
 currentRoom=caseId;
 if(!window.db)return;
+/* Clear old messages */
+window.db.ref('rooms/'+caseId+'/comments').remove();
+window.db.ref('rooms/'+caseId+'/requests').remove();
+window.db.ref('rooms/'+caseId+'/verdict').remove();
 /* Register as player */
 var playerRef=window.db.ref('rooms/'+caseId+'/players/'+myUid);
 playerRef.set({name:me.name||'Maître',joined:Date.now()});
@@ -1584,7 +1819,7 @@ if(roomListener)window.db.ref('rooms/'+currentRoom+'/comments').off();
 window.db.ref('rooms/'+caseId+'/comments').orderByChild('ts').limitToLast(50).on('child_added',function(snap){
 var m=snap.val();
 if(m.uid===myUid)return;
-addC(m.name,m.text,m.color||'#7C5CFC');
+addC(cleanMsg(m.name),cleanMsg(m.text),m.color||'#7C5CFC');
 });
 }
 
@@ -1606,7 +1841,6 @@ uid:myUid,name:name,text:text,color:color,ts:Date.now()
 }
 
 buildHome();
-buildAvenir();
 </script>
 </body>
 </html>
