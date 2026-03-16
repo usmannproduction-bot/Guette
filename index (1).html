@@ -408,6 +408,8 @@ body{background:#08080C;color:#F0F0F5;font-family:-apple-system,BlinkMacSystemFo
 </div>
 <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
 
+<!-- FIXED BOTTOM BAR -->
+<div style="flex-shrink:0">
 <!-- REQUEST WORD (defense & accusation only) -->
 <div id="request-word" style="display:none;padding:6px 14px;border-top:1px solid rgba(255,255,255,.04)">
 <button id="req-btn" style="width:100%;padding:10px;background:rgba(255,210,63,.08);border:1.5px solid rgba(255,210,63,.2);border-radius:12px;color:#FFD23F;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px" onclick="requestWord()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFD23F" stroke-width="2.5" stroke-linecap="round"><path d="M12 1v14M5 8l7-7 7 7"/></svg>Demander la parole</button>
@@ -430,6 +432,7 @@ body{background:#08080C;color:#F0F0F5;font-family:-apple-system,BlinkMacSystemFo
 <button style="padding:10px 16px;background:linear-gradient(135deg,#FF7A2E,#FFA04E);border:none;border-radius:99px;color:#fff;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap" onclick="sendCom()">Envoyer</button>
 </div>
 <audio id="remote-audio" autoplay style="display:none"></audio>
+</div>
 </div>
 
 <!-- SOLO GAME -->
@@ -781,31 +784,6 @@ peers[data.peerId]=call;
 /* Join a room and listen for real comments */
 var roomListener=null;
 
-function joinRoom(caseId){
-currentRoom=caseId;
-if(!window.db)return;
-/* Clear old messages */
-window.db.ref('rooms/'+caseId+'/comments').remove();
-window.db.ref('rooms/'+caseId+'/requests').remove();
-window.db.ref('rooms/'+caseId+'/verdict').remove();
-/* Register as player */
-var playerRef=window.db.ref('rooms/'+caseId+'/players/'+myUid);
-playerRef.set({name:me.name||'Maître',joined:Date.now()});
-playerRef.onDisconnect().remove();
-/* Listen for player count */
-window.db.ref('rooms/'+caseId+'/players').on('value',function(snap){
-var count=snap.numChildren();
-var el=document.getElementById('a-viewers');
-if(el)el.textContent=count+' joueur'+(count>1?'s':'');
-});
-/* Listen for comments */
-if(roomListener)window.db.ref('rooms/'+currentRoom+'/comments').off();
-window.db.ref('rooms/'+caseId+'/comments').orderByChild('ts').limitToLast(50).on('child_added',function(snap){
-var m=snap.val();
-if(m.uid===myUid)return;
-addC(cleanMsg(m.name),cleanMsg(m.text),m.color||'#7C5CFC');
-});
-}
 
 function leaveRoom(){
 if(!window.db||!currentRoom)return;
@@ -1588,8 +1566,9 @@ var now=new Date();var ts=String(now.getHours()).padStart(2,'0')+':'+String(now.
 var safeName=String(name||'').replace(/</g,'&lt;');var safeText=String(text||'').replace(/</g,'&lt;');
 d.innerHTML='<div style="width:26px;height:26px;border-radius:50%;background:'+color+';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#fff;flex-shrink:0">'+name.substring(0,2).toUpperCase()+'</div><div style="flex:1;min-width:0"><div style="display:flex;align-items:center;gap:6px"><span style="font-size:11px;font-weight:700;color:'+color+'">'+name+'</span><span style="font-size:9px;color:#505068">'+ts+'</span></div><div style="font-size:13px;color:rgba(255,255,255,.9);line-height:1.4;margin-top:2px">'+safeText+'</div></div>';
 el.appendChild(d);
-while(el.children.length>20)el.removeChild(el.firstChild);
-el.scrollTop=el.scrollHeight;
+while(el.children.length>25)el.removeChild(el.firstChild);
+/* Always scroll to show newest message */
+requestAnimationFrame(function(){el.scrollTop=el.scrollHeight});
 }
 /* CONTENT FILTER */
 var BLOCKED=['putain','merde','connard','connasse','salope','nique','pute','fuck','shit','bitch','asshole','nigger','nigga'];
@@ -1630,7 +1609,7 @@ var ad=document.createElement('div');
 ad.style.cssText='padding:10px 14px;background:rgba('+(myRole==='defense'?'78,203,113':'255,71,87')+',.08);border:1px solid rgba('+(myRole==='defense'?'78,203,113':'255,71,87')+',.15);border-radius:12px';
 ad.innerHTML='<div style="font-size:10px;font-weight:700;color:'+color+';margin-bottom:3px">'+label+'</div><div style="font-size:13px;color:#fff;line-height:1.5">'+t+'</div>';
 argEl.appendChild(ad);
-argEl.scrollTop=argEl.scrollHeight;
+requestAnimationFrame(function(){argEl.scrollTop=argEl.scrollHeight});
 }
 /* Send to Firebase so judge and spectators see it */
 sendComToFirebase(label+' · '+(me.name||''),t,color);
@@ -1806,7 +1785,7 @@ window.db.ref('rooms/'+caseId+'/requests').remove();
 window.db.ref('rooms/'+caseId+'/verdict').remove();
 /* Register as player */
 var playerRef=window.db.ref('rooms/'+caseId+'/players/'+myUid);
-playerRef.set({name:me.name||'Maître',joined:Date.now()});
+playerRef.set({name:me.name||'',joined:Date.now()});
 playerRef.onDisconnect().remove();
 /* Listen for player count */
 window.db.ref('rooms/'+caseId+'/players').on('value',function(snap){
